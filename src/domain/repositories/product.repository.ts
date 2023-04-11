@@ -7,5 +7,5 @@ export interface IProductRepository<
   findProductById(id: string): Promise<Model>;
   registerProduct(product: Model): Promise<Model>;
   updateProduct(id: string, product: Model): Promise<Model>;
-  deleteProduct(id: string): Promise<boolean>;
+  deleteProduct(id: string): Promise<Model>;
 }

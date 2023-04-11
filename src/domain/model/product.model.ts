@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 export class ProductDomain {
   id: string;
   name: string;
-  inventory: string;
+  inventory: number;
   enabled: boolean;
   min: number;
   max: number;
@@ -16,7 +16,7 @@ export class ProductDomain {
     max,
   }: {
     name: string;
-    inventory: string;
+    inventory: number;
     enabled: boolean;
     min: number;
     max: number;
