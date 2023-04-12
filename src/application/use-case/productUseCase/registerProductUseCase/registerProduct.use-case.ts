@@ -1,6 +1,6 @@
 import { ProductDomain } from 'src/domain';
 import { IProductRepository } from 'src/domain/repositories';
-import { IUseCase } from '../interfaces/use-case.interface';
+import { IUseCase } from '../../interfaces/use-case.interface';
 
 export class RegisterProductUseCase implements IUseCase {
   constructor(private readonly productRepository: IProductRepository) {}

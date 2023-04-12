@@ -3,7 +3,7 @@ import {
   ProductDomain,
   PaginationDomain,
 } from 'src/domain';
-import { IUseCase } from '../interfaces/use-case.interface';
+import { IUseCase } from '../../interfaces/use-case.interface';
 
 export class FindAllProductUseCase implements IUseCase {
   constructor(private readonly productService: IProductRepository) {}

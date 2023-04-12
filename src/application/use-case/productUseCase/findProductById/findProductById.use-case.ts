@@ -1,5 +1,5 @@
 import { IProductRepository, ProductDomain } from 'src/domain';
-import { IUseCase } from '../interfaces/use-case.interface';
+import { IUseCase } from '../../interfaces/use-case.interface';
 
 export class FindProductByIdUseCase implements IUseCase {
   constructor(private readonly productRepository: IProductRepository) {}

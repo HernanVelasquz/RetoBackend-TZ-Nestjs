@@ -6,5 +6,5 @@ export default interface IClientReository<
 > {
   registerBuy(productBuy: Model): Promise<Model>;
   findAllBuy(pagination: Pag): Promise<Model[]>;
-  findByClientId(id: string): Promise<Model>;
+  findBuyClientId(id: string): Promise<Model>;
 }

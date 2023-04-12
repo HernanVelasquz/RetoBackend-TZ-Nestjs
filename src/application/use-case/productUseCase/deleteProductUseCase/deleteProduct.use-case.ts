@@ -1,5 +1,5 @@
 import { ProductDomain } from 'src/domain';
-import { IUseCase } from '../interfaces/use-case.interface';
+import { IUseCase } from '../../interfaces/use-case.interface';
 import { IProductRepository } from 'src/domain/repositories/product.repository';
 
 export class DeleteProductUseCase implements IUseCase {
