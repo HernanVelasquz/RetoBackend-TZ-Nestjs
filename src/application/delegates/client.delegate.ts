@@ -1,4 +1,4 @@
-import IClientReository from 'src/domain/repositories/client.repository';
+import { IBuyRepository } from 'src/domain/repositories';
 import {
   FindAllBuyUseCase,
   FindBuyClientIdUseCase,
@@ -8,20 +8,20 @@ import {
 
 export class ClientDelegate implements IUseCase {
   private delegate: IUseCase;
-  constructor(private readonly clientBuyRepository: IClientReository) {}
+  constructor(private readonly buyRepository: IBuyRepository) {}
   execute<Response>(...args: any[]): Promise<Response> {
     return this.delegate.execute(...args);
   }
 
   toFindAllBuy(): void {
-    this.delegate = new FindAllBuyUseCase(this.clientBuyRepository);
+    this.delegate = new FindAllBuyUseCase(this.buyRepository);
   }
 
   toFindProductById(): void {
-    this.delegate = new FindBuyClientIdUseCase(this.clientBuyRepository);
+    this.delegate = new FindBuyClientIdUseCase(this.buyRepository);
   }
 
   toRegisterClientBuy(): void {
-    this.delegate = new RegisterBuyClientUseCase(this.clientBuyRepository);
+    this.delegate = new RegisterBuyClientUseCase(this.buyRepository);
   }
 }

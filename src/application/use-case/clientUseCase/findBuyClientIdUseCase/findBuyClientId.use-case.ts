@@ -1,10 +1,9 @@
-import { ClientDomain } from 'src/domain';
-import IClientReository from 'src/domain/repositories/client.repository';
+import { BuyDomain, IBuyRepository } from 'src/domain';
 import { IUseCase } from '../../interfaces/use-case.interface';
 
 export class FindBuyClientIdUseCase implements IUseCase {
-  constructor(public readonly clienteBuyRepository: IClientReository) {}
-  async execute(idBuy: string): Promise<ClientDomain> {
-    return await this.clienteBuyRepository.findBuyClientId(idBuy);
+  constructor(public readonly buyRepository: IBuyRepository) {}
+  async execute(idBuy: string): Promise<BuyDomain> {
+    return await this.buyRepository.findBuyClientId(idBuy);
   }
 }
