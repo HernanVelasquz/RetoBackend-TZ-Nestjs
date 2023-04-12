@@ -1,4 +1,5 @@
 import {
+  Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
@@ -6,6 +7,7 @@ import { BuyDomain, IBuyRepository, PaginationDomain } from 'src/domain';
 import { DataSource, Repository } from 'typeorm';
 import { BuyEntity } from '../entities/buy.entity';
 
+@Injectable()
 export class BuyRepository
   extends Repository<BuyEntity>
   implements IBuyRepository

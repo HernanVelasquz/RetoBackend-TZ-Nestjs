@@ -6,7 +6,7 @@ import {
   RegisterBuyClientUseCase,
 } from '../use-case';
 
-export class ClientDelegate implements IUseCase {
+export class BuyDelegate implements IUseCase {
   private delegate: IUseCase;
   constructor(private readonly buyRepository: IBuyRepository) {}
   execute<Response>(...args: any[]): Promise<Response> {
