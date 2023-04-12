@@ -4,16 +4,19 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 import { ProductDelegate } from 'src/application/delegates/product.delegate';
 import { ProductEntity } from '../databases/entities/product.entity';
 import { ProductRepository } from '../databases/repositories/product.repository';
+import { PaginationDTO } from '../dto/pagination.dto';
 import { ProductDTO } from '../dto/product.dto';
 
-@Controller()
+@Controller('product')
 export class ProductApi {
   private readonly productUseCase: ProductDelegate;
 
@@ -22,13 +25,15 @@ export class ProductApi {
   }
 
   @Get()
-  find(): Promise<ProductEntity[]> {
+  findAll(@Query() paginationDto: PaginationDTO): Promise<ProductEntity[]> {
     this.productUseCase.toFindProduct();
-    return this.productUseCase.execute<ProductEntity[]>();
+    return this.productUseCase.execute<ProductEntity[]>(paginationDto);
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Promise<ProductEntity> {
+  findById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ): Promise<ProductEntity> {
     this.productUseCase.toFindProductById();
     return this.productUseCase.execute(id);
   }
@@ -41,7 +46,7 @@ export class ProductApi {
 
   @Put(':id')
   updateProduct(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() product: ProductDTO,
   ): Promise<ProductEntity> {
     this.productUseCase.toUpdateProduct();
@@ -49,7 +54,9 @@ export class ProductApi {
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): Promise<ProductEntity> {
+  deleteProduct(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ): Promise<ProductEntity> {
     this.productUseCase.toDeleteProduct();
     return this.productUseCase.execute(id);
   }
