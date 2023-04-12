@@ -12,6 +12,9 @@ export class ProductEntity extends ProductDomain {
   @Column({ type: 'int', nullable: false, default: 0 })
   inventory: number;
 
+  @Column({ type: 'int', nullable: false, default: 0 })
+  price: number;
+
   @Column({ type: 'bool', default: true })
   enabled: boolean;
 
