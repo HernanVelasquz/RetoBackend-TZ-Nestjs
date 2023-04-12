@@ -3,9 +3,9 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { DataSource, Repository } from 'typeorm';
 
 import { IProductRepository, ProductDomain } from 'src/domain';
-import { DataSource, Repository } from 'typeorm';
 import { ProductEntity } from '../entities/product.entity';
 
 @Injectable()
@@ -40,9 +40,8 @@ export class ProductRepository
     product: ProductDomain,
   ): Promise<ProductDomain> {
     try {
-      const productDatabase = await this.findProductById(id);
-      this.merge(productDatabase, product);
-      return await this.save(productDatabase);
+      await this.update(id, product);
+      return this.findProductById(id);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -50,7 +49,7 @@ export class ProductRepository
   async deleteProduct(id: string): Promise<ProductDomain> {
     try {
       const productDatabase = await this.findProductById(id);
-      this.delete(productDatabase);
+      this.remove(productDatabase);
       return productDatabase;
     } catch (error) {
       throw new InternalServerErrorException(error);

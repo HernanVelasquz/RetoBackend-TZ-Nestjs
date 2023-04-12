@@ -6,13 +6,13 @@ export class ProductEntity extends ProductDomain {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: 'varchar', length: 255 })
   name: string;
 
   @Column({ type: 'int', nullable: false, default: 0 })
   inventory: number;
 
-  @Column({ type: 'boolean', default: true })
+  @Column({ type: 'bool', default: true })
   enabled: boolean;
 
   @Column({ type: 'int', nullable: false, default: 0 })
