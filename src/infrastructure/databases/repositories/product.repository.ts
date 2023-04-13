@@ -24,7 +24,7 @@ export class ProductRepository
   async findAllProduct(
     paginationDTO: PaginationDomain,
   ): Promise<ProductDomain[]> {
-    const { limit = 10, offset = 0 } = paginationDTO;
+    const { limit = 5, offset = 0 } = paginationDTO;
     return await this.find({ take: limit, skip: offset });
   }
   async findProductById(id: string): Promise<ProductDomain> {

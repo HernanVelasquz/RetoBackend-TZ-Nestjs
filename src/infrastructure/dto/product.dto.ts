@@ -16,6 +16,12 @@ export class ProductDTO extends ProductDomain {
   @IsNotEmpty()
   @IsPositive()
   inventory: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  price: number;
+
   @IsBoolean()
   @IsNotEmpty()
   enabled: boolean;

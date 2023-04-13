@@ -2,24 +2,26 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsString,
-  Max,
-  Min,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 import { BuyDomain } from 'src/domain';
 
 export class BuyDTO extends BuyDomain {
   @IsString()
   @IsNotEmpty()
-  @Max(5)
+  @MaxLength(5)
+  @MinLength(1)
   documentType: string;
   @IsString()
   @IsNotEmpty()
-  @Max(10)
+  @MaxLength(10)
+  @MinLength(5)
   noDocument: string;
   @IsString()
   @IsNotEmpty()
-  @Max(30)
-  @Min(3)
+  @MaxLength(30)
+  @MinLength(3)
   clientName: string;
   @IsNotEmptyObject()
   product: Map<string, number>;
