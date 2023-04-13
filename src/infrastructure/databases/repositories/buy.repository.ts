@@ -30,11 +30,10 @@ export class BuyRepository
         ...productBuy,
         buyDate: new Date(),
       });
-      this.validateProductQuantities(productBuy.product);
       await this.descountProductDb(productBuy.product);
       return await this.save(newProductBuy);
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      this.hadlerExeption(error);
     }
   }
 
@@ -52,33 +51,34 @@ export class BuyRepository
   private async descountProductDb(
     products: Map<string, number>,
   ): Promise<void> {
-    for (const [idProduct, quality] of Object.entries(products)) {
-      await this.productRepository
-        .createQueryBuilder()
-        .update(ProductEntity)
-        .set({ inventory: () => `inventory - ${quality}` })
-        .where(`id = :id `, { id: idProduct })
-        .execute();
+    for (const [idProduct, quantity] of Object.entries(products)) {
+      const { min, max, ...product } = await this.productRepository.findOneBy({
+        id: idProduct,
+      });
+      if (quantity < min) {
+        throw new BadRequestException(
+          `You can't buy less than ${min} units of ${product.id}.`,
+        );
+      }
+      if (quantity > max) {
+        throw new BadRequestException(
+          `You can't buy more than ${max} units of ${product.id}.`,
+        );
+      }
+      if (!product.enabled) {
+        throw new BadRequestException(
+          `You cannot buy with product id ${idProduct}, there is no stock available`,
+        );
+      }
+      if (product.inventory - quantity <= 0) product.enabled = false;
+      await this.productRepository.update(idProduct, {
+        inventory: product.inventory - quantity,
+        enabled: product.enabled,
+      });
     }
   }
 
-  private async validateProductQuantities(
-    products: Map<string, number>,
-  ): Promise<void> {
-    for (const [productId, quantity] of Object.entries(products)) {
-      const product = await this.productRepository.findOneBy({ id: productId });
-      try {
-        if (quantity < product.min) {
-          throw new BadRequestException(
-            `You can't buy less than ${product.min} units of ${product.id}.`,
-          );
-        }
-        if (quantity > product.max) {
-          throw new BadRequestException(
-            `You can't buy more than ${product.max} units of ${product.id}.`,
-          );
-        }
-      } catch (error) {}
-    }
+  private hadlerExeption(error: any) {
+    throw new InternalServerErrorException(error);
   }
 }
