@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,16 +24,12 @@ export class BuyRepository
   }
 
   async registerBuy(productBuy: BuyDomain): Promise<BuyDomain> {
-    try {
-      const newProductBuy = this.create({
-        ...productBuy,
-        buyDate: new Date(),
-      });
-      await this.descountProductDb(productBuy.product);
-      return await this.save(newProductBuy);
-    } catch (error) {
-      this.hadlerExeption(error);
-    }
+    const newProductBuy = this.create({
+      ...productBuy,
+      buyDate: new Date(),
+    });
+    await this.validation(productBuy.product);
+    return await this.save(newProductBuy);
   }
 
   async findAllBuy(pagination: PaginationDomain): Promise<BuyDomain[]> {
@@ -48,37 +43,41 @@ export class BuyRepository
     return buyDatabase;
   }
 
-  private async descountProductDb(
-    products: Map<string, number>,
-  ): Promise<void> {
+  private async validation(products: Map<string, number>): Promise<void> {
     for (const [idProduct, quantity] of Object.entries(products)) {
-      const { min, max, ...product } = await this.productRepository.findOneBy({
-        id: idProduct,
-      });
+      const { min, max, inventory, enabled } =
+        await this.productRepository.findOneBy({
+          id: idProduct,
+        });
       if (quantity < min) {
         throw new BadRequestException(
-          `You can't buy less than ${min} units of ${product.id}.`,
+          `You can't buy less than ${min} units of ${idProduct}.`,
         );
       }
       if (quantity > max) {
         throw new BadRequestException(
-          `You can't buy more than ${max} units of ${product.id}.`,
+          `You can't buy more than ${max} units of ${idProduct}.`,
         );
       }
-      if (!product.enabled) {
+      if (!enabled) {
         throw new BadRequestException(
           `You cannot buy with product id ${idProduct}, there is no stock available`,
         );
       }
-      if (product.inventory - quantity <= 0) product.enabled = false;
-      await this.productRepository.update(idProduct, {
-        inventory: product.inventory - quantity,
-        enabled: product.enabled,
-      });
+      this.descontDatabase(inventory, quantity, enabled, idProduct);
     }
   }
 
-  private hadlerExeption(error: any) {
-    throw new InternalServerErrorException(error);
+  private async descontDatabase(
+    inventory: number,
+    quantity: number,
+    enabled: boolean,
+    idProduct: string,
+  ) {
+    if (inventory - quantity <= 0) enabled = false;
+    await this.productRepository.update(idProduct, {
+      inventory: inventory - quantity,
+      enabled: enabled,
+    });
   }
 }
