@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -25,14 +26,18 @@ export class BuyRepository
 
   async registerBuy(productBuy: BuyDomain): Promise<BuyDomain> {
     try {
-      productBuy.buyDate = new Date();
-      const newProductBuy = this.create(productBuy);
-      this.descountProductDb(productBuy.product);
+      const newProductBuy = this.create({
+        ...productBuy,
+        buyDate: new Date(),
+      });
+      this.validateProductQuantities(productBuy.product);
+      await this.descountProductDb(productBuy.product);
       return await this.save(newProductBuy);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
   }
+
   async findAllBuy(pagination: PaginationDomain): Promise<BuyDomain[]> {
     const { limit = 5, offset = 0 } = pagination;
     return await this.find({ take: limit, skip: offset });
@@ -57,5 +62,23 @@ export class BuyRepository
     }
   }
 
-  // private async validationCantBuyProduct(): Promise<void> {}
+  private async validateProductQuantities(
+    products: Map<string, number>,
+  ): Promise<void> {
+    for (const [productId, quantity] of Object.entries(products)) {
+      const product = await this.productRepository.findOneBy({ id: productId });
+      try {
+        if (quantity < product.min) {
+          throw new BadRequestException(
+            `You can't buy less than ${product.min} units of ${product.id}.`,
+          );
+        }
+        if (quantity > product.max) {
+          throw new BadRequestException(
+            `You can't buy more than ${product.max} units of ${product.id}.`,
+          );
+        }
+      } catch (error) {}
+    }
+  }
 }
