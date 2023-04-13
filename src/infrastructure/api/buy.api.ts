@@ -7,12 +7,15 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { BuyDelegate } from 'src/application/delegates/buy.delegate';
-import { BuyRepository } from '../databases/repositories/buy.repository';
-import { BuyEntity } from '../databases/entities/buy.entity';
-import { PaginationDTO } from '../dto/pagination.dto';
-import { BuyDTO } from '../dto/buy.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+import { BuyDelegate } from 'src/application/delegates/buy.delegate';
+import { BuyEntity } from '../databases/entities/buy.entity';
+import { BuyRepository } from '../databases/repositories/buy.repository';
+import { BuyDTO } from '../dto/buy.dto';
+import { PaginationDTO } from '../dto/pagination.dto';
+
+@ApiTags('Buy')
 @Controller('buy')
 export class BuyApi {
   private readonly buyUseCase: BuyDelegate;

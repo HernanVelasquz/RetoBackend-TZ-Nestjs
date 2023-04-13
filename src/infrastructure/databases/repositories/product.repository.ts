@@ -28,7 +28,7 @@ export class ProductRepository
     return await this.find({ take: limit, skip: offset });
   }
   async findProductById(id: string): Promise<ProductDomain> {
-    const productDatBase = this.findOneBy({ id });
+    const productDatBase = await this.findOneBy({ id });
     if (!productDatBase)
       throw new NotFoundException(`Product whit id ${id} not found`);
     return productDatBase;
