@@ -74,6 +74,15 @@ export class ProductApi {
   }
 
   @Put(':id')
+  @ApiResponse({
+    status: 201,
+    description: 'Product was update successfully',
+    type: ProductEntity,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   updateProduct(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() product: ProductDTO,
@@ -83,6 +92,15 @@ export class ProductApi {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 201,
+    description: 'Product was delete successfully',
+    type: ProductEntity,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   deleteProduct(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
   ): Promise<ProductEntity> {
