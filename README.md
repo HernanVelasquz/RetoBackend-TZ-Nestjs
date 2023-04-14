@@ -5,34 +5,38 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+El presente repositorio contiene la solucion del reto tecnico el cual permite, registrar prodictos, actualizaros, buscarlos, foltrarlos por id, ademas de realizar compras y poder consultar las compras realizada y filtrarla por id de la compra.
+
+El proyecto cuenta con una base de datos la cual se encuentra en postgresSql para poder hacer la persistencia de datos.
+
+## Poder ejecutar Aplicacion
+
+Para poder ejecutar el presente proyecto primero hay que editar el archivo de nomber ` .env.templeate` y colocarle ` .env`. Este archivo tiene las variables de entorno que requiere el proyecto para ejecutar.
+
+```
+DB_HOST= # yoor envoroment database
+DB_PORT= # Port for dataase
+DB_NAME= # Database Name
+DB_USERNAME= # Your user name database
+DB_PASSWORD= # Your user password database
+PORT= # Port for dataase fot running app
+```
+
+Para poder poner en marcha el proyecto, puede hacerlo de dos forma, Si tiene docker instalado en el equipo, puede usar el comando `docker compose up -d ` y este se encargara de levantar el servidor con la base de datos configurada. Si no posee docker, es mejor usar un servidor de base de datos como xampp, laragon o si tiene el motor de base de datos en su equipo puede colocarle las variables que requiere para la conexcion.
 
 ## Installation
+
+Para poder realizar la instalacion de los modulos del y poder ejecutar el proyecto, es necesario que tenga pnpm instaldo, si no posee pnpm en su equipo, puede usar el siguiente verificarlo [aqui](https://pnpm.io/installation). Despues de tener pnpm instlado, puede ejecutar el comando siguiente comando para instalar las dependencias del proyecto.
 
 ```bash
 $ pnpm install
 ```
 
 ## Running the app
+
+Teniedo las dependencias instaladas, ejecute los comando para levantar el servidor en el modo que desea
 
 ```bash
 # development
@@ -57,17 +61,3 @@ $ pnpm run test:e2e
 # test coverage
 $ pnpm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
