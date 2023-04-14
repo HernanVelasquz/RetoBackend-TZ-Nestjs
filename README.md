@@ -33,6 +33,9 @@ Para poder realizar la instalacion de los modulos del y poder ejecutar el proyec
 ```bash
 $ pnpm install
 ```
+## Ducumentacion
+Se implemento el modulo de Swagger para poer realizar la documentacion de los endpoints, para acceder a este se debe usar la siguiente ruta 
+``` http://localhost:3000/api ```
 
 ## Running the app
 
