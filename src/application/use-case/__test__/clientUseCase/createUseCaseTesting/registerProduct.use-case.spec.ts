@@ -1,4 +1,5 @@
-import { RegisterProductUseCase } from 'src/application/use-case';
+import {} from '@nestjs/testing';
+import { RegisterProductUseCase } from '../../../productUseCase/registerProductUseCase/registerProduct.use-case';
 import { IProductRepository, ProductDomain } from 'src/domain';
 
 describe('RegisterUseCase', () => {
@@ -20,14 +21,16 @@ describe('RegisterUseCase', () => {
     const payload = {
       id: '4ae27a28-b99a-4fa1-813e-710ca8762eff',
       name: 'Pollo',
+      price: 20000,
       inventory: 500,
       enabled: true,
-      min: 6,
-      max: 30,
+      min: 1,
+      max: 3,
     };
     const mockData = {
       name: 'Pollo',
       inventory: 500,
+      price: 20000,
       enabled: true,
       min: 6,
       max: 30,
@@ -36,6 +39,7 @@ describe('RegisterUseCase', () => {
       id,
       name: 'Pollo',
       inventory: 500,
+      price: 20000,
       enabled: true,
       min: 6,
       max: 30,
